@@ -88,8 +88,8 @@ public class sorting {
         int n2 = right - mid;
         int[] l = new int[n1];
         int[] r = new int[n2];
-        for (int i = 0; i < n1; i++) L[i] = arr[left + i];
-        for (int j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
+        for (int i = 0; i < n1; i++) r[i] = arr[left + i];
+        for (int j = 0; j < n2; j++) r[j] = arr[mid + 1 + j];
         int i = 0, j = 0, k = left;
         while (i < n1 && j < n2) {
             if (l[i] <= r[j]) arr[k++] = l[i++];
