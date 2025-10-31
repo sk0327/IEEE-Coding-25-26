@@ -1,0 +1,194 @@
+import java.util.Scanner;
+
+public class sorting {
+
+    void selectionSort(int[] arr, int n) {
+        int min, temp;
+        for (int i = 0; i < n - 1; i++) {
+            min = i;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[min]) {
+                    min = j;
+                }
+            }
+            temp = arr[i];
+            arr[i] = arr[min];
+            arr[min] = temp;
+        }
+        System.out.println("Sorted using Selection Sort:");
+        display(arr, n);
+    }
+
+    void insertionSort(int[] arr, int n) {
+        for (int i = 1; i < n; i++) {
+            int key = arr[i];
+            int j = i - 1;
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = key;
+        }
+        System.out.println("Sorted using Insertion Sort:");
+        display(arr, n);
+    }
+
+    void bubbleSort(int[] arr, int n) {
+        int temp;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+        System.out.println("Sorted using Bubble Sort:");
+        display(arr, n);
+    }
+
+    void recursiveSelectionSort(int[] arr, int n, int index) {
+        if (index == n - 1) return;
+        int min = index;
+        for (int j = index + 1; j < n; j++) {
+            if (arr[j] < arr[min]) {
+                min = j;
+            }
+        }
+        int temp = arr[min];
+        arr[min] = arr[index];
+        arr[index] = temp;
+        recursiveSelectionSort(arr, n, index + 1);
+    }
+
+    void recursiveBubbleSort(int[] arr, int n) {
+        if (n == 1) return;
+        for (int i = 0; i < n - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                int temp = arr[i];
+                arr[i] = arr[i + 1];
+                arr[i + 1] = temp;
+            }
+        }
+        recursiveBubbleSort(arr, n - 1);
+    }
+
+    void mergeSort(int[] arr, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+            mergeSort(arr, left, mid);
+            mergeSort(arr, mid + 1, right);
+            merge(arr, left, mid, right);
+        }
+    }
+
+    void merge(int[] arr, int left, int mid, int right) {
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+        for (int i = 0; i < n1; i++) L[i] = arr[left + i];
+        for (int j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
+        int i = 0, j = 0, k = left;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) arr[k++] = L[i++];
+            else arr[k++] = R[j++];
+        }
+        while (i < n1) arr[k++] = L[i++];
+        while (j < n2) arr[k++] = R[j++];
+    }
+
+    void quickSort(int[] arr, int low, int high) {
+        if (low < high) {
+            int pi = partition(arr, low, high);
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+    }
+
+    int partition(int[] arr, int low, int high) {
+        int pivot = arr[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+        int temp = arr[i + 1];
+        arr[i + 1] = arr[high];
+        arr[high] = temp;
+        return i + 1;
+    }
+
+    void display(int[] arr, int n) {
+        for (int i = 0; i < n; i++) {
+            System.out.print(arr[i] + "\t");
+        }
+        System.out.println("\n");
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        sorting s = new sorting();
+        System.out.print("Enter the number of elements: ");
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+        System.out.println("Enter " + n + " elements:");
+        for (int i = 0; i < n; i++) arr[i] = sc.nextInt();
+        int choice;
+        do {
+           
+            System.out.println("1. Selection Sort");
+            System.out.println("2. Insertion Sort");
+            System.out.println("3. Bubble Sort");
+            System.out.println("4. Recursive Selection Sort");
+            System.out.println("5. Recursive Bubble Sort");
+            System.out.println("6. Merge Sort");
+            System.out.println("7. Quick Sort");
+            System.out.println("8. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            int[] temp = arr.clone();
+            switch (choice) {
+                case 1 : s.selectionSort(temp, n);
+                case 2 : s.insertionSort(temp, n);
+                case 3 : s.bubbleSort(temp, n);
+                case 4 : 
+                    s.recursiveSelectionSort(temp, n, 0);
+                    System.out.println("Sorted using Recursive Selection Sort:");
+                    s.display(temp, n);
+                    break;
+                
+                case 5 : 
+                    s.recursiveBubbleSort(temp, n);
+                    System.out.println("Sorted using Recursive Bubble Sort:");
+                    s.display(temp, n);
+                    break;
+                
+                case 6 : 
+                    s.mergeSort(temp, 0, n - 1);
+                    System.out.println("Sorted using Merge Sort:");
+                    s.display(temp, n);
+                    break;
+                
+                case 7 :
+                    s.quickSort(temp, 0, n - 1);
+                    System.out.println("Sorted using Quick Sort:");
+                    s.display(temp, n);
+                    break;
+                
+                case 8 : 
+                System.out.println("Exiting!!!...");
+                break;
+
+                default : 
+                System.out.println("Invalid input!");
+            }
+        } while (choice != 8);
+        sc.close();
+    }
+}
