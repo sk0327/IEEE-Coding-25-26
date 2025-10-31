@@ -86,17 +86,17 @@ public class sorting {
     void merge(int[] arr, int left, int mid, int right) {
         int n1 = mid - left + 1;
         int n2 = right - mid;
-        int[] L = new int[n1];
-        int[] R = new int[n2];
+        int[] l = new int[n1];
+        int[] r = new int[n2];
         for (int i = 0; i < n1; i++) L[i] = arr[left + i];
         for (int j = 0; j < n2; j++) R[j] = arr[mid + 1 + j];
         int i = 0, j = 0, k = left;
         while (i < n1 && j < n2) {
-            if (L[i] <= R[j]) arr[k++] = L[i++];
-            else arr[k++] = R[j++];
+            if (l[i] <= r[j]) arr[k++] = l[i++];
+            else arr[k++] = l[j++];
         }
-        while (i < n1) arr[k++] = L[i++];
-        while (j < n2) arr[k++] = R[j++];
+        while (i < n1) arr[k++] = l[i++];
+        while (j < n2) arr[k++] = r[j++];
     }
 
     void quickSort(int[] arr, int low, int high) {
@@ -154,9 +154,15 @@ public class sorting {
             choice = sc.nextInt();
             int[] temp = arr.clone();
             switch (choice) {
-                case 1 : s.selectionSort(temp, n);
-                case 2 : s.insertionSort(temp, n);
-                case 3 : s.bubbleSort(temp, n);
+                case 1 : 
+                    s.selectionSort(temp, n);
+                    break;
+                case 2 : 
+                    s.insertionSort(temp, n);
+                    break;
+                case 3 : 
+                    s.bubbleSort(temp, n);
+                    break;
                 case 4 : 
                     s.recursiveSelectionSort(temp, n, 0);
                     System.out.println("Sorted using Recursive Selection Sort:");
